@@ -1,7 +1,7 @@
 const database = require("../../database");
 const sequelize =require("sequelize");
 const { DataTypes } = sequelize;
-const { INTEGER, STRING, BOOLEAN, FLOAT } = DataTypes;
+const { INTEGER, STRING, FLOAT, DATE} = DataTypes;
 
 const orderModel = database.define(
   "order",
@@ -12,7 +12,7 @@ const orderModel = database.define(
       primaryKey: true,
       autoIncrement: true,
     },
-    external_id: {
+    refId: {
       type: INTEGER.UNSIGNED,
       allowNull: true,
     },
@@ -24,8 +24,16 @@ const orderModel = database.define(
       type: INTEGER.UNSIGNED,
       allowNull: false,
     },
-    recurrenceTypeId: {
-      type: INTEGER.UNSIGNED,
+    address: {
+      type: STRING,
+      allowNull: false,
+    },
+    latitude: {
+      type: FLOAT,
+      allowNull: false,
+    },
+    longitude: {
+      type: FLOAT,
       allowNull: false,
     },
     created_at: {
@@ -49,4 +57,4 @@ const orderModel = database.define(
   }
 );
 
-module.exports = jobModel;
+module.exports = orderModel;
