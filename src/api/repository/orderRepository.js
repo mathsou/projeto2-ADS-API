@@ -4,7 +4,7 @@ module.exports = {
   async findAll(user_id) {
     return await orderModel.findAll({
       where: {user_id},
-      order: ['id', 'DESC']
+      ordering: [['id', 'DESC']]
     });
   },
   async findOne(id){
