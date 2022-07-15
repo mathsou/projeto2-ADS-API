@@ -1,20 +1,23 @@
 const orderModel = require("../model/orderModel");
+const { Op } = require("sequelize");
 
 module.exports = {
-  async findAll(user_id) {
+  async findAll(user_id, dateFrom) {
+    let where = { user_id };
+    if (dateFrom) where.created_at = { [Op.gt]: dateFrom };
     return await orderModel.findAll({
-      where: {user_id},
-      ordering: [['id', 'DESC']]
+      where,
+      order: [["id", "DESC"]],
     });
   },
-  async findOne(id){
+  async findOne(id) {
     return await orderModel.findOne({
-      where: {id},
+      where: { id },
     });
   },
-  async findOrderByRefId({refId, userId: user_id}) {
+  async findOrderByRefId({ refId, userId: user_id }) {
     return await orderModel.findOne({
-      where: {refId, user_id},
+      where: { refId, user_id },
     });
   },
   async saveOrder(payload) {
@@ -24,5 +27,5 @@ module.exports = {
     return await orderModel.destroy({
       where: { id },
     });
-  }
+  },
 };
